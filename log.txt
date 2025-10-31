@@ -1,0 +1,12 @@
+(2025-10-30 10:50:36.272630) FROM MAIN_WINDOW 2: Failed to load table: expected str, bytes or os.PathLike object, not tuple 
+(2025-10-30 10:55:01.726611) FROM MAIN_WINDOW 2: Failed to load table: expected str, bytes or os.PathLike object, not tuple 
+(2025-10-30 10:55:28.360604) FROM MAIN_WINDOW 2: Failed to load table: list index out of range 
+(2025-10-30 10:55:47.150147) FROM MAIN_WINDOW 2: Failed to load table: list index out of range 
+(2025-10-30 11:04:13.566865) FROM MAIN_WINDOW 2: Failed to save table: 'NoneType' object has no attribute 'save' 
+(2025-10-30 11:04:55.204775) FROM MAIN_WINDOW 2: Failed to save table: 'NoneType' object has no attribute 'save' 
+(2025-10-30 11:09:13.775278) FROM MAIN_WINDOW 2: Failed to save table: setFileMode(self, mode: QFileDialog.FileMode): first argument of unbound method must have type 'QFileDialog' 
+(2025-10-30 11:10:05.521043) FROM MAIN_WINDOW LogType.ERROR: Failed to save table: setFileMode(self, mode: QFileDialog.FileMode): first argument of unbound method must have type 'QFileDialog' 
+(2025-10-30 11:13:02.317773) FROM MAIN_WINDOW ERROR: Failed to save table: setFileMode(self, mode: QFileDialog.FileMode): first argument of unbound method must have type 'QFileDialog' 
+(2025-10-30 11:13:04.884336) FROM MAIN_WINDOW ERROR: Failed to save table: setFileMode(self, mode: QFileDialog.FileMode): first argument of unbound method must have type 'QFileDialog' 
+(2025-10-30 11:15:06.306984) FROM MAIN_WINDOW ERROR: Failed to load table: [Errno 2] No such file or directory: '' 
+(2025-10-30 12:21:59.038483) FROM MAIN_WINDOW ERROR: Failed to load table: [Errno 2] No such file or directory: '' 
