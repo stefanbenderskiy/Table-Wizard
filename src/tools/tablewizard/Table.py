@@ -11,9 +11,9 @@ class Table:
         if headers:
             self.headers = headers
         else:
-            self.headers = [""] * len(self.data)
-        length = len(headers)
-        for row in data:
+            self.headers = [""] * len(self.data) or []
+        length = len(self.headers)
+        for row in self.data:
             ln = len(row)
             if ln != length:
                 raise InvalidTableFormat(f"еhe lengths of the rows in the table are different.")
@@ -66,7 +66,7 @@ class Table:
     def delete_column(self, index):
         self.headers.pop(index)
         for i in range(len(self.data)):
-            self.data.pop(index)
+            self.data[i].pop(index)
 
     # Добавить ряд в таблицу
     def add_row(self, row):
@@ -88,7 +88,7 @@ class Table:
         return self.get_data()
     # Получить размер таблицы
     def size(self):
-        return (len(self.data), len(self.data[0]))
+        return (len(self.data), len(self.headers))
 
     def __len__(self):
         return len(self.data)

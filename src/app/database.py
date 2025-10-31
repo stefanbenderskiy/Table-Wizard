@@ -23,7 +23,5 @@ class DataBase:
             self.commit()
         except Exception as e:
             print(e)
-    def select(self):
-        pass
     def get_all_data(self):
         return self.cursor.fetchall()
