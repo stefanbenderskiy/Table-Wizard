@@ -11,7 +11,6 @@ class Application:
         self.app = QApplication(sys.argv)
         self.logger = Logger("log.txt")
         self.main_window = MainWindow(self)
-        sys.__excepthook__ = self.main_window.excepthook
 
     # Старт приложения
     def start(self):

@@ -1,6 +1,3 @@
-import sys
-from datetime import datetime
-
 from src.tools.tablewizard.Table import Table
 from resources import Resources
 from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem, \
@@ -26,7 +23,30 @@ class OrderWindow(QMainWindow):
         self.cancel_button.clicked.connect(self.close)
 
     def input(self):
-        return self.keys_edit.text().strip().split(","), self.reversed_check_box.isChecked()
+        order_type = self.order_type_combo_box.currentText()
+        keys = self.keys_edit.text().strip().split(",")
+        reverse = self.reversed_check_box.isChecked()
+        converter = None
+        if order_type == "Auto":
+            def convert(x):
+                try:
+                    return float(x)
+                except Exception:
+                    try:
+                        return int(x)
+                    except Exception:
+                        return x
+
+            converter = convert
+        elif order_type == "Integer":
+            converter = int
+        elif order_type == "Float":
+            converter = float
+        elif order_type == "Lenght":
+            converter = len
+        elif order_type == "String":
+            converter = str
+        return converter, keys, reverse
 
 
 class InsertWindow(QMainWindow):
@@ -61,11 +81,8 @@ class MainWindow(QMainWindow):
     # Загрузка интерфейса из ui файла
     def load_ui(self):
         try:
-            print("ПРОВЕРКА НА ОШИБКУ")
             uic.loadUi(Resources.get_ui("main-window.ui"), self)
-            print("ОШИБКИ НЕТ")
         except Exception as e:
-            print("ОШИБКА ЕСТЬ")
             self.application.logger.error("Failed to load window ui: " + str(e), sender="MAIN_WINDOW")
 
     def init_ui(self):
@@ -80,7 +97,7 @@ class MainWindow(QMainWindow):
         self.action_delete_row.triggered.connect(self.delete_row)
         self.action_delete_column.triggered.connect(self.delete_column)
         self.action_order_rows.triggered.connect(self.order_rows)
-        self.action_order_columns.triggered.connect(self.order_сolumns)
+        self.action_order_columns.triggered.connect(self.order_columns)
 
         # Иницализация редактора
         self.table_widget.itemSelectionChanged.connect(self.display_selection)
@@ -239,14 +256,14 @@ class MainWindow(QMainWindow):
         order_window.show()
 
         def clicked():
-            keys, reverse = order_window.input()
+            converter, keys, reverse = order_window.input()
             try:
                 if keys == ['']:
                     keys = None
                 else:
                     keys = list(map(lambda x: int(x) + 1, keys))
                 try:
-                    self.table.order_rows(keys, reverse)
+                    self.table.order_rows(keys, reverse, conventer=converter)
                     self.update_table()
                 except Exception:
                     QMessageBox.critical(self, "Error", f"Invalid keys!")
@@ -257,21 +274,21 @@ class MainWindow(QMainWindow):
 
         order_window.order_button.clicked.connect(clicked)
 
-    def order_сolumns(self):
+    def order_columns(self):
         order_window = OrderWindow(self)
         order_window.setWindowTitle("Order columns")
         order_window.keys_label.setText("Key rows")
         order_window.show()
 
         def clicked():
-            keys, reverse = order_window.input()
+            conventer, keys, reverse = order_window.input()
             try:
                 if keys == ['']:
                     keys = None
                 else:
                     keys = list(map(lambda x: int(x) + 1, keys))
                 try:
-                    self.table.order_columns(keys, reverse)
+                    self.table.order_columns(keys, reverse, conventer=conventer)
                     self.update_table()
                 except Exception:
                     QMessageBox.critical(self, "Error", f"Invalid keys!")
@@ -289,6 +306,3 @@ class MainWindow(QMainWindow):
             for j, t in enumerate(row):
                 item = QTableWidgetItem(t)
                 self.table_widget.setItem(i, j, item)
-
-    def excepthook(self, ext_type, value):
-        sys.__excepthook__(ext_type, value)

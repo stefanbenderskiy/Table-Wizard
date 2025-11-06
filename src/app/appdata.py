@@ -11,5 +11,9 @@ class AppData:
         pass
     def get_resent_file(self):
         return self.get_value("Resent file")
-    def get_history(self):
-        return self.get_value("History")
+    def get_history(self, history_name):
+        return self.database.select("Histories","Name",history_name)
+    def add_history(self, history_name):
+        self.database.insert("Histories","Pos", 0,history_name,indificator="Name")
+    def delete_history(self, history_name):
+        pass

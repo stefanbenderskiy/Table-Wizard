@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
+    <width>800</width>
     <height>600</height>
    </rect>
   </property>
@@ -158,7 +158,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QFrame" name="editor_frame">
+        <widget class="QFrame" name="tools_frame">
          <property name="minimumSize">
           <size>
            <width>200</width>
@@ -178,7 +178,7 @@
              <string notr="true"/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="editor_tab">
              <property name="cursor">
@@ -192,185 +192,181 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout">
               <item>
-               <layout class="QVBoxLayout" name="editor_frame_vertical_layout">
-                <item>
-                 <widget class="QLabel" name="editor_label">
-                  <property name="styleSheet">
-                   <string notr="true">font-size:18px;</string>
-                  </property>
-                  <property name="text">
-                   <string>Editor</string>
-                  </property>
-                  <property name="textFormat">
-                   <enum>Qt::AutoText</enum>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QScrollArea" name="editor_tools_scroll_area">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="widgetResizable">
-                   <bool>true</bool>
-                  </property>
-                  <widget class="QWidget" name="editor_tools_widget">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>374</width>
-                     <height>396</height>
-                    </rect>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_2">
-                    <item row="10" column="0">
-                     <widget class="QLabel" name="editor_tools_order_label">
-                      <property name="styleSheet">
-                       <string notr="true">font-size:16px;</string>
-                      </property>
-                      <property name="text">
-                       <string>Order</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="12" column="0" colspan="2">
-                     <widget class="QPushButton" name="order_columns_button">
-                      <property name="text">
-                       <string>Order columns</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="selection_label">
-                      <property name="text">
-                       <string>Selection</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="14" column="0">
-                     <spacer name="verticalSpacer">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item row="8" column="0" colspan="2">
-                     <widget class="QPushButton" name="delete_row_button">
-                      <property name="text">
-                       <string>Delete row</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="value_label">
-                      <property name="text">
-                       <string>Value</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="6" column="0" colspan="2">
-                     <widget class="QPushButton" name="insert_row_button">
-                      <property name="text">
-                       <string>Insert row</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="QLineEdit" name="value_edit">
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="7" column="0" colspan="2">
-                     <widget class="QPushButton" name="insert_column_button">
-                      <property name="text">
-                       <string>Insert column</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="0" colspan="2">
-                     <widget class="QPushButton" name="add_row_button">
-                      <property name="text">
-                       <string>Add row</string>
-                      </property>
-                      <property name="checkable">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="9" column="0" colspan="2">
-                     <widget class="QPushButton" name="delete_column_button">
-                      <property name="text">
-                       <string>Delete column</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="editor_tools_edit_label">
-                      <property name="styleSheet">
-                       <string notr="true">font-size:16px</string>
-                      </property>
-                      <property name="text">
-                       <string>Edit table</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="0" colspan="2">
-                     <widget class="QLabel" name="label">
-                      <property name="styleSheet">
-                       <string notr="true">font-size:16px</string>
-                      </property>
-                      <property name="text">
-                       <string>Edit Selection</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="5" column="0" colspan="2">
-                     <widget class="QPushButton" name="add_column_button">
-                      <property name="text">
-                       <string>Add column</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QLineEdit" name="selection_edit">
-                      <property name="styleSheet">
-                       <string notr="true">color: gray</string>
-                      </property>
-                      <property name="text">
-                       <string>None</string>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="11" column="0" colspan="2">
-                     <widget class="QPushButton" name="order_rows_button">
-                      <property name="text">
-                       <string>Order rows</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QLabel" name="editor_label">
+                <property name="styleSheet">
+                 <string notr="true">font-size:18px;</string>
+                </property>
+                <property name="text">
+                 <string>Editor</string>
+                </property>
+                <property name="textFormat">
+                 <enum>Qt::AutoText</enum>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QScrollArea" name="editor_tools_scroll_area">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="widgetResizable">
+                 <bool>true</bool>
+                </property>
+                <widget class="QWidget" name="editor_tools_widget">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>303</width>
+                   <height>398</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_2">
+                  <item row="7" column="0" colspan="2">
+                   <widget class="QPushButton" name="insert_column_button">
+                    <property name="text">
+                     <string>Insert column</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="editor_tools_edit_label">
+                    <property name="styleSheet">
+                     <string notr="true">font-size:16px</string>
+                    </property>
+                    <property name="text">
+                     <string>Edit table</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="selection_label">
+                    <property name="text">
+                     <string>Selection</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="value_label">
+                    <property name="text">
+                     <string>Value</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="12" column="0" colspan="2">
+                   <widget class="QPushButton" name="order_columns_button">
+                    <property name="text">
+                     <string>Order columns</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0" colspan="2">
+                   <widget class="QPushButton" name="insert_row_button">
+                    <property name="text">
+                     <string>Insert row</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="0" colspan="2">
+                   <widget class="QPushButton" name="delete_row_button">
+                    <property name="text">
+                     <string>Delete row</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0" colspan="2">
+                   <widget class="QPushButton" name="add_row_button">
+                    <property name="text">
+                     <string>Add row</string>
+                    </property>
+                    <property name="checkable">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="value_edit">
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0" colspan="2">
+                   <widget class="QPushButton" name="add_column_button">
+                    <property name="text">
+                     <string>Add column</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="10" column="0">
+                   <widget class="QLabel" name="editor_tools_order_label">
+                    <property name="styleSheet">
+                     <string notr="true">font-size:16px;</string>
+                    </property>
+                    <property name="text">
+                     <string>Order</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" colspan="2">
+                   <widget class="QLabel" name="label">
+                    <property name="styleSheet">
+                     <string notr="true">font-size:16px</string>
+                    </property>
+                    <property name="text">
+                     <string>Edit Selection</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="selection_edit">
+                    <property name="styleSheet">
+                     <string notr="true">color: gray</string>
+                    </property>
+                    <property name="text">
+                     <string>None</string>
+                    </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="0" colspan="2">
+                   <widget class="QPushButton" name="delete_column_button">
+                    <property name="text">
+                     <string>Delete column</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="11" column="0" colspan="2">
+                   <widget class="QPushButton" name="order_rows_button">
+                    <property name="text">
+                     <string>Order rows</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="14" column="0">
+                   <spacer name="verticalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -378,6 +374,155 @@
              <attribute name="title">
               <string>Analysis</string>
              </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QLabel" name="analysis_label">
+                <property name="styleSheet">
+                 <string notr="true">font-size:18px;</string>
+                </property>
+                <property name="text">
+                 <string>Analisys</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QScrollArea" name="scrollArea">
+                <property name="widgetResizable">
+                 <bool>true</bool>
+                </property>
+                <widget class="QWidget" name="analysis_tools_scroll_area">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>303</width>
+                   <height>398</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_4">
+                  <item row="12" column="0" colspan="3">
+                   <spacer name="verticalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="4" column="0" colspan="3">
+                   <widget class="QTextBrowser" name="textBrowser"/>
+                  </item>
+                  <item row="1" column="1" colspan="2">
+                   <widget class="QLineEdit" name="lineEdit"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_4">
+                    <property name="text">
+                     <string>Search type</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1" colspan="2">
+                   <widget class="QComboBox" name="comboBox">
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Value</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Function</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" colspan="3">
+                   <widget class="QLabel" name="label_2">
+                    <property name="styleSheet">
+                     <string notr="true">font-size:16px;</string>
+                    </property>
+                    <property name="text">
+                     <string>Find</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="3">
+                   <widget class="QPushButton" name="pushButton">
+                    <property name="text">
+                     <string>Search</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_3">
+                    <property name="text">
+                     <string>Search</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_5">
+                    <property name="styleSheet">
+                     <string notr="true">font-size:16px;</string>
+                    </property>
+                    <property name="text">
+                     <string>Select</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="1">
+                   <widget class="QLineEdit" name="lineEdit_2"/>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QLabel" name="label_7">
+                    <property name="text">
+                     <string>Selection:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="QLabel" name="label_6">
+                    <property name="text">
+                     <string>Selection List:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="0" colspan="2">
+                   <widget class="QListWidget" name="listWidget">
+                    <item>
+                     <property name="text">
+                      <string>Element 1</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Element 2</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="11" column="0" colspan="2">
+                   <widget class="QPushButton" name="pushButton_2">
+                    <property name="text">
+                     <string>Add Finding</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </widget>
           </item>
@@ -407,7 +552,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>903</width>
+     <width>800</width>
      <height>21</height>
     </rect>
    </property>

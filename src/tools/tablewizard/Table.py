@@ -30,10 +30,13 @@ class Table:
 
     def save(self, filename):
         with open(filename, "w", encoding="utf-8") as file:
-            file.write(";".join(self.headers) + "\n")
-            file.write("\n".join([";".join(i) for i in self.data]))
-            file.write("\n")
-
+            return str(self)
+    def from_str(self, string):
+        lines = list(filter(lambda x: x,string.split('\n')))
+        headers = lines[0].split(';')
+        data = list(map(lambda x: x.split(';'), lines[1:]))
+        table = Table(data, headers)
+        return table
     # Задать данные таблицы
     def set_data(self, data):
         self.data = data
@@ -73,25 +76,22 @@ class Table:
         for i in range(len(self.data)):
             self.data[i].pop(index)
 
-    def order_columns(self, keys=None, reverse=False, consider_headers=False):
+    def order_columns(self, keys=None, reverse=False, consider_headers=False, conventer=None):
         columns = self.get_columns()
         if not keys:
             keys = list(range(len(self.data)))
+
         def key(x):
             global columns
             values = []
             for k in keys:
-                value = None
-                try:
-                    value = float(x[k])
-                except Exception:
-                    value = x[k]
-                values.append(value)
+                if conventer:
+                    values.append(conventer(x[k]))
+                else:
+                    values.append(x[k])
             if consider_headers:
                 values = [self.get_header(columns.index(x))] + values
             return values
-
-
 
         ordered_columns = sorted(columns, reverse=reverse, key=key)
         self.data = [[ordered_columns[j][i] for j in range(len(self.headers))] for i in range(len(self.data))]
@@ -108,6 +108,7 @@ class Table:
                 else:
                     columns[j].append(self.data[i][j])
         return columns
+
     # Добавить ряд в таблицу
     def add_row(self, row):
         self.data.append(row)
@@ -115,21 +116,23 @@ class Table:
     # Вставить ряд в таблицу
     def insert_row(self, index, row):
         self.data.insert(index, row)
-    def order_rows(self, keys=None, reverse=False):
+
+    def order_rows(self, keys=None, reverse=False, conventer=None):
         rows = self.get_rows()
         if not keys:
             keys = list(range(len(self.headers)))
+
         def key(x):
             values = []
             for k in keys:
-                value = None
-                try:
-                    value = float(x[k])
-                except Exception:
-                    value = x[k]
-                values.append(value)
+                if conventer:
+                    values.append(conventer(x[k]))
+                else:
+                    values.append(x[k])
             return values
+
         self.data = sorted(rows, reverse=reverse, key=key)
+
     # Удалить ряд из таблицы
     def delete_row(self, index):
         self.data.pop(index)
@@ -141,9 +144,15 @@ class Table:
     def get_rows(self):
         return self.get_data()
 
+    def get_item(self, row, column):
+        return self.data[row][column]
+
     # Получить размер таблицы
     def size(self):
         return (len(self.data), len(self.headers))
 
     def __len__(self):
         return len(self.data)
+
+    def __str__(self):
+        return ";".join(self.headers) + "\n" + "\n".join([";".join(i) for i in self.data]) + "\n"
