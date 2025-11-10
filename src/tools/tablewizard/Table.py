@@ -1,6 +1,7 @@
 class InvalidTableFormat(Exception):
     pass
-
+class TableOrderError(Exception):
+    pass
 
 class Table:
     def __init__(self, data=None, headers=None):
@@ -16,7 +17,7 @@ class Table:
         for row in self.data:
             ln = len(row)
             if ln != length:
-                raise InvalidTableFormat(f"еhe lengths of the rows in the table are different.")
+                raise InvalidTableFormat(f"Lengths of the rows in the table are different.")
             length = ln
 
     @staticmethod
@@ -76,25 +77,24 @@ class Table:
         for i in range(len(self.data)):
             self.data[i].pop(index)
 
-    def order_columns(self, keys=None, reverse=False, consider_headers=False, conventer=None):
+    def order_columns(self, keys=None, reverse=False,  conventer=None):
         columns = self.get_columns()
         if not keys:
             keys = list(range(len(self.data)))
-
         def key(x):
-            global columns
             values = []
             for k in keys:
                 if conventer:
                     values.append(conventer(x[k]))
                 else:
                     values.append(x[k])
-            if consider_headers:
-                values = [self.get_header(columns.index(x))] + values
-            return values
+            return tuple(values)
+        try:
+            ordered_columns = sorted(columns, reverse=reverse, key=key)
+            self.data = [[ordered_columns[j][i] for j in range(len(self.headers))] for i in range(len(self.data))]
+        except Exception:
+            raise TableOrderError
 
-        ordered_columns = sorted(columns, reverse=reverse, key=key)
-        self.data = [[ordered_columns[j][i] for j in range(len(self.headers))] for i in range(len(self.data))]
 
     def get_column(self, column):
         return [i[column] for i in self.data]
@@ -104,7 +104,7 @@ class Table:
         for i in range(len(self.data)):
             for j in range(len(self.data[i])):
                 if i == 0:
-                    columns.append(self.data[i][j])
+                    columns.append([self.data[i][j]])
                 else:
                     columns[j].append(self.data[i][j])
         return columns
@@ -129,9 +129,11 @@ class Table:
                     values.append(conventer(x[k]))
                 else:
                     values.append(x[k])
-            return values
-
-        self.data = sorted(rows, reverse=reverse, key=key)
+            return tuple(values)
+        try:
+            self.data = sorted(rows, reverse=reverse, key=key)
+        except Exception:
+            raise TableOrderError
 
     # Удалить ряд из таблицы
     def delete_row(self, index):

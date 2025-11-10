@@ -24,21 +24,8 @@ class DataBase:
             self.commit()
         except Exception as e:
             print(e)
-    def select(self, table, column = None, item = None, indificator = "id"):
-        if column:
-            if item:
-                return self.get_request("""SELECT ? FROM ? WHERE ? = ?""", (column,table,indificator, item))
-            else:
-                return self.get_request("""SELECT ? FROM ? WHERE ? = ?""", (column,table, indificator, item))
-        else:
-            return self.get_request("""SELECT * FROM ?""", (table,))
-    def update(self, table, column, value, item = None, indificator = "id"):
-        if item:
-            self.set_request("""UPDATE ? SET ? = ?""", (table, column, value))
-        else:
-            self.set_request("""UPDATE ? SET ? = ? WHERE ? = ?""", (table, column,value, indificator, item))
-    def insert(self, table, column, value, item, indificator = "id"):
-        self.set_request("""INSERT INTO ?(?, ?) VALUES(?, ?)""",(table, indificator, column, item, value))
 
+    def close(self):
+        self.connection.close()
     def get_all_data(self):
         return self.cursor.fetchall()

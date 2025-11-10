@@ -1,5 +1,7 @@
 import sys
-from src.app.interface import MainWindow
+
+from src.app.appdata import AppData
+from src.app.interface import MainWindow, OpenWindow
 from PyQt6.QtWidgets import QApplication
 from src.app.logger import Logger
 
@@ -20,11 +22,6 @@ class Application:
     # Остановка приложения
     def stop(self):
         self.app.quit()
-
-    # Получить главное окно приложения
-    def get_main_window(self):
-        return self.main_window
-
     # Получить журнал приложения
     def get_logger(self):
         return self.logger
