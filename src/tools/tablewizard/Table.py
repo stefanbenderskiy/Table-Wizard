@@ -13,17 +13,13 @@ class Table:
             self.headers = headers
         else:
             self.headers = [""] * len(self.data) or []
-        length = len(self.headers)
-        for row in self.data:
-            ln = len(row)
-            if ln != length:
-                raise InvalidTableFormat(f"Lengths of the rows in the table are different.")
-            length = ln
 
     @staticmethod
     def load(filename):
         with open(filename, "r", encoding="utf-8") as file:
             lines = file.readlines()
+            if lines == []:
+                return Table()
             headers = lines[0].split(';')
             data = list(map(lambda x: x.split(';'), lines[1:]))
             table = Table(data, headers)

@@ -5,15 +5,15 @@ from src.app.appdata import AppData
 from src.app.history import History, Action
 from src.tools.tablewizard.Table import Table, TableOrderError
 from resources import Resources
-from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem, \
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem, QWidget, \
     QInputDialog, QListWidget
 from PyQt6 import uic, QtCore
 
 
-class CreateWindow(QMainWindow):
+class CreateWindow(QWidget):
     def __init__(self, main_window):
         self.main_window = main_window
-        super(CreateWindow, self).__init__(main_window)
+        super().__init__()
         self.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
         self.application = main_window.application
         self.load_ui()
@@ -44,27 +44,28 @@ class CreateWindow(QMainWindow):
         if not location:
             QMessageBox.warning(self, "Warning", "Please enter a location")
             return
-        rows = self.rows_edit.text()
-        columns = self.columns_edit.text()
+        rows = int(self.rows_edit.text())
+        columns = int(self.columns_edit.text())
         headers = self.headers_edit.text().strip().split(', ')
         if len(headers) > columns:
             QMessageBox.critical("Error","Too many headers")
             return
         else:
-            headers = headers + [''] * (len(headers) - columns)
+            headers = headers + [[''] * (len(headers) - columns)]
         try:
+            print(headers)
             filename= f'{location}/{name}.csv'
             table = Table([([''] * rows) * columns], headers=headers)
             table.save(filename)
             self.main_window.load_table(filename)
         except Exception as e:
-            QMessageBox.warning(self, "Error", 'Invalid location!')
+            QMessageBox.critical(self, "Error", 'Invalid location!')
             self.application.logger.error("Failed to create table: " + str(e), sender="CREATE_WINDOW")
 
-class OpenWindow(QMainWindow):
+class OpenWindow(QWidget):
     def __init__(self, main_window):
         self.main_window = main_window
-        super(OpenWindow, self).__init__(main_window)
+        super().__init__()
         self.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
         self.application = main_window.application
         self.load_ui()
@@ -103,9 +104,9 @@ class OpenWindow(QMainWindow):
 
 
 
-class OrderWindow(QMainWindow):
+class OrderWindow(QWidget):
     def __init__(self, main_window):
-        super(OrderWindow, self).__init__(main_window)
+        super().__init__()
         self.application = main_window.application
         self.load_ui()
         self.init_ui()
@@ -147,9 +148,9 @@ class OrderWindow(QMainWindow):
         return converter, keys, reverse
 
 
-class InsertWindow(QMainWindow):
+class InsertWindow(QWidget):
     def __init__(self, window):
-        super(InsertWindow, self).__init__(window)
+        super().__init__()
         self.application = window.application
         self.load_ui()
         self.init_ui()
@@ -172,13 +173,13 @@ class MainWindow(QMainWindow):
     def __init__(self, application):
         super().__init__()
         self.application = application
+        self.load_ui()
         resent_file = AppData.get_resent_file()
         if resent_file:
             self.load_table(resent_file)
         else:
             self.table = Table()
             self.resent_tables()
-        self.load_ui()
         self.init_ui()
         self.history = None
 
@@ -254,18 +255,23 @@ class MainWindow(QMainWindow):
             self.application.logger.error("Failed to open table: " + str(e), sender="MAIN_WINDOW")
 
     def save_table(self):
-        try:
-            self.table.save(self.filename)
-        except Exception as e:
-            self.application.logger.error("Failed to save table: " + str(e), sender="MAIN_WINDOW")
-            QMessageBox.critical(self, "Error", f"Failed to save table. Error:\n {e.__class__.__name__}")
+        if self.filename:
+            try:
+                self.table.save(self.filename)
+            except Exception as e:
+                self.application.logger.error("Failed to save table: " + str(e), sender="MAIN_WINDOW")
+                QMessageBox.critical(self, "Error", f"Failed to save table. Error:\n {e.__class__.__name__}")
+        else:
+            self.save_table_as()
 
     def save_table_as(self):
         try:
-            filename = QFileDialog.getSaveFileName()[0]
+            file_dialog = QFileDialog()
+            filename = file_dialog.getSaveFileName()[0]
             self.table.save(filename)
-        except Exception:
-            pass
+        except Exception as e:
+            self.application.logger.error("Failed to save table: " + str(e), sender="MAIN_WINDOW")
+            QMessageBox.critical(self, "Error", f"Failed to save table. Error:\n {e.__class__.__name__}")
     def last(self):
         self.table = self.history.last()
         self.update_table()
@@ -413,7 +419,7 @@ class MainWindow(QMainWindow):
                     self.apply_action('Order rows')
                     self.update_table()
                 except Exception:
-                    QMessageBox.critical(self, "Error", f"Invalid keys!")
+                    QMessageBox.critical(self, "Error", f"Invalid keys or order type!")
             except Exception:
                 QMessageBox.warning(self, "Warning",
                                     f"Key-columns should contain indexes of key-columns splited by comma!")
@@ -441,7 +447,7 @@ class MainWindow(QMainWindow):
                 except TableOrderError:
                     QMessageBox.critical(self, "Error", f"Keys have different type!")
                 except Exception:
-                    QMessageBox.critical(self, "Error", f"Invalid keys!")
+                    QMessageBox.critical(self, "Error", f"Invalid keys or order type!")
 
             except Exception:
                 QMessageBox.warning(self, "Warning", f"Key-rows should contain indexes of key-rows splited by comma!")
@@ -453,10 +459,12 @@ class MainWindow(QMainWindow):
         self.history.apply_action(Action(name, str(self.table)))
     """Функции анализа"""
     def find(self):
-        search = self.search_edit.text()
-        search_type = self.search_type_combo_box.currentText()
-        if search_type == "Value":
-            pass
+        filter = self.search_edit.text()
+        filter_type = self.search_type_combo_box.currentText()
+        if filter_type == "Value":
+            finding = list(filter(self.table.data))
+            for f in finding:
+                self.finding_list.addItem()
 
     def update_table(self):
         self.table_widget.setRowCount(self.table.size()[0])

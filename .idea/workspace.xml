@@ -5,18 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="edf9d9d4-bfe0-42e0-9a49-7837eaa9bd0e" name="Changes" comment="alpha-0-0-6">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/ui/create-window.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/ui/open-window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/ui/create-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/create-window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/ui/insert-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/insert-window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/ui/main-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/main-window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/ui/open-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/open-window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/ui/order-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/order-window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/appdata.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/appdata.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/application.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/data/appdata.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/appdata.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/history.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/history.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/launcher.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/launcher.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tools/database/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/database/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tools/tablewizard/Table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/tablewizard/Table.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,11 +85,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\src\app\data" />
+      <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\src\app" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\res\ui" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\config" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\test" />
-      <recent name="F:\Folders\PyCharmProjects\Table-Wizard\src\app" />
-      <recent name="F:\Folders\PyCharmProjects\Table-Wizard\src" />
     </key>
   </component>
   <component name="RunManager">

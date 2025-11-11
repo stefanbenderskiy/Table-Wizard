@@ -7,14 +7,14 @@ class AppData:
     @staticmethod
     def get_value(name):
         try:
-            return AppData.database.get_request("""SELECT Value FROM Values WHERE Name = ?""", (name,))[0][0]
+            return AppData.database.get_request("""SELECT Value FROM Dataset WHERE Name = ?""", (name,))[0][0]
         except Exception:
             pass
 
     @staticmethod
     def set_value(name, value):
         try:
-            AppData.database.set_request("""UPDATE Values SET Value = ? WHERE Name = ?""", (value, name))[0][0]
+            AppData.database.set_request("""UPDATE Dataset SET Value = ? WHERE Name = ?""", (value, name))[0][0]
         except Exception:
             pass
     @staticmethod
@@ -36,4 +36,8 @@ class AppData:
         AppData.database.set_request("""INSERT INTO Tables VALUES (?, ?)""", (table_name, path))
     @staticmethod
     def get_all_tables():
-        return list(map(lambda x: x[0], AppData.database.get_request("""SELECT Name FROM Tables""",())))
+        data = AppData.database.get_request("""SELECT Name FROM Tables""")
+        if data:
+            return list(map(lambda x: x[0], data))
+        else:
+            return []
