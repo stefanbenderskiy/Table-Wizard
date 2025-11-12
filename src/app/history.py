@@ -30,7 +30,10 @@ class History:
         self.actions = []
 
     def get_action(self, pos):
-        return self.actions[pos]
+        if self.actions:
+            return self.actions[pos]
+        else:
+            return None
 
     def add_action(self, action: Action):
         if self.current_pos == len(self.actions) - 1:
@@ -48,22 +51,32 @@ class History:
         return [self.get_action(i) for i in range(len(self.actions))]
 
     def get_current_action(self):
-        return self.actions[self.current_pos]
+        if self.actions:
+            return self.actions[self.current_pos]
+        else:
+            return None
+
     def undo(self):
-        self.current_pos = min(self.current_pos - 1, 0)
-        return self.get_current_action()
+        if self.actions:
+            self.current_pos = max(self.current_pos - 1, 0)
+
     def redo(self):
-        self.current_pos = max(self.current_pos + 1, len(self.actions) - 1)
-        return self.get_current_action()
+        if self.actions:
+            self.current_pos = min(self.current_pos + 1, len(self.actions) - 1)
+
     def set_current_pos(self, pos):
         if 0 <= pos <= len(self.actions):
             self.current_pos = pos
+
     def get_current_pos(self):
         return self.current_pos
+
     def last(self):
         return self.actions[-1]
+
     def clear(self):
         self.actions.clear()
+
     def store(self, filename):
         root = ElementTree.Element('history')
         for action in self.actions:

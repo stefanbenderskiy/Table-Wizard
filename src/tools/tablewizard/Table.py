@@ -1,7 +1,26 @@
+from enum import Enum
+
+
 class InvalidTableFormat(Exception):
     pass
+
+
 class TableOrderError(Exception):
     pass
+
+
+class InvalidFilterType(Exception):
+    pass
+
+
+class InvalidFunctionFormat(Exception):
+    pass
+
+
+class FilterType(Enum):
+    Value = 0
+    Function = 1
+
 
 class Table:
     def __init__(self, data=None, headers=None):
@@ -20,49 +39,45 @@ class Table:
             lines = file.readlines()
             if lines == []:
                 return Table()
-            headers = lines[0].split(';')
-            data = list(map(lambda x: x.split(';'), lines[1:]))
+            headers = lines[0].replace('\n', '').split(';')
+            data = list(map(lambda x: x.replace('\n', '').split(';'), lines[1:]))
             table = Table(data, headers)
             return table
 
     def save(self, filename):
         with open(filename, "w", encoding="utf-8") as file:
-            return str(self)
-    def from_str(self, string):
-        lines = list(filter(lambda x: x,string.split('\n')))
+            file.write(str(self))
+
+    @staticmethod
+    def from_str(string):
+        lines = list(filter(lambda x: x, string.split('\n')))
         headers = lines[0].split(';')
         data = list(map(lambda x: x.split(';'), lines[1:]))
-        table = Table(data, headers)
-        return table
-    # Задать данные таблицы
+        return Table(data, headers)
+
     def set_data(self, data):
         self.data = data
 
-    # Получить данные таблицы
     def get_data(self):
         return self.data
 
     def get_header(self, column):
         return self.headers[column]
 
-    # Получить заголовки таблицы
     def get_headers(self):
         return self.headers
 
-    # Задать заголовки таблицы
     def set_headers(self, headers):
         self.headers = headers
 
     def has_headers(self):
         return bool(self.headers)
 
-    # Добвать столбец в таблицу
     def add_column(self, column, header=""):
         self.headers.append(header)
         for i in range(len(self.data)):
             self.data[i].append(column[i])
 
-    # Вставить столбец в таблицу
     def insert_column(self, index, column, header=""):
         self.headers.insert(index, header)
         for i in range(len(self.data)):
@@ -73,10 +88,11 @@ class Table:
         for i in range(len(self.data)):
             self.data[i].pop(index)
 
-    def order_columns(self, keys=None, reverse=False,  conventer=None):
+    def order_columns(self, keys=None, reverse=False, conventer=None):
         columns = self.get_columns()
         if not keys:
             keys = list(range(len(self.data)))
+
         def key(x):
             values = []
             for k in keys:
@@ -85,12 +101,12 @@ class Table:
                 else:
                     values.append(x[k])
             return tuple(values)
+
         try:
             ordered_columns = sorted(columns, reverse=reverse, key=key)
             self.data = [[ordered_columns[j][i] for j in range(len(self.headers))] for i in range(len(self.data))]
         except Exception:
             raise TableOrderError
-
 
     def get_column(self, column):
         return [i[column] for i in self.data]
@@ -105,11 +121,9 @@ class Table:
                     columns[j].append(self.data[i][j])
         return columns
 
-    # Добавить ряд в таблицу
     def add_row(self, row):
         self.data.append(row)
 
-    # Вставить ряд в таблицу
     def insert_row(self, index, row):
         self.data.insert(index, row)
 
@@ -126,16 +140,15 @@ class Table:
                 else:
                     values.append(x[k])
             return tuple(values)
+
         try:
             self.data = sorted(rows, reverse=reverse, key=key)
         except Exception:
             raise TableOrderError
 
-    # Удалить ряд из таблицы
     def delete_row(self, index):
         self.data.pop(index)
 
-    # Получить ряд из таблицы
     def get_row(self, index):
         return self.data[index]
 
@@ -144,6 +157,32 @@ class Table:
 
     def get_item(self, row, column):
         return self.data[row][column]
+
+    def set_item(self, row, column, value):
+        self.data[row][column] = str(value)
+
+    def find(self, filter, filter_type=FilterType.Value):
+        finding = []
+        if filter_type == FilterType.Value:
+            for row in range(len(self.data)):
+                for column in range(len(self.data[row])):
+                    item = self.get_item(row, column)
+                    if filter in item:
+                        finding.append((item, (row, column)))
+        elif filter_type == FilterType.Function:
+            for row in range(len(self.data)):
+                for column in range(len(self.data[row])):
+                    x = self.get_item(row, column)
+                    flag = False
+                    try:
+                        flag = eval(filter)
+                    except Exception:
+                        raise InvalidFunctionFormat("Invalid filter function format!")
+                    if flag:
+                        finding.append((x, (row, column)))
+        else:
+            raise InvalidFilterType(f"Invalid filter type: {filter_type}!")
+        return finding
 
     # Получить размер таблицы
     def size(self):

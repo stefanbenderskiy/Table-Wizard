@@ -52,19 +52,6 @@
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
-        <item row="0" column="1">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="0" column="3">
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
@@ -78,18 +65,8 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="cells_selected_label">
-          <property name="styleSheet">
-           <string notr="true">color:gray</string>
-          </property>
-          <property name="text">
-           <string>Cells selected:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <spacer name="horizontalSpacer_4">
+        <item row="0" column="1">
+         <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -100,16 +77,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="rows_selected_label">
-          <property name="styleSheet">
-           <string notr="true">color:gray</string>
-          </property>
-          <property name="text">
-           <string>Rows selected:</string>
-          </property>
-         </widget>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="columns_selected_label">
@@ -128,6 +95,16 @@
           </property>
           <property name="text">
            <string>Path:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="rows_selected_label">
+          <property name="styleSheet">
+           <string notr="true">color:gray</string>
+          </property>
+          <property name="text">
+           <string>Rows selected:</string>
           </property>
          </widget>
         </item>
@@ -245,8 +222,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>258</width>
-                   <height>438</height>
+                   <width>289</width>
+                   <height>384</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_2">
@@ -422,44 +399,23 @@
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>0</y>
-                   <width>258</width>
-                   <height>444</height>
+                   <y>-198</y>
+                   <width>272</width>
+                   <height>582</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_4">
-                  <item row="8" column="0" colspan="2">
-                   <widget class="QListWidget" name="listWidget">
-                    <item>
-                     <property name="text">
-                      <string>Element 1</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Element 2</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                  <item row="7" column="0">
-                   <widget class="QLabel" name="label_6">
-                    <property name="text">
-                     <string>Selection List:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="10" column="0" colspan="2">
-                   <widget class="QPushButton" name="pushButton_2">
-                    <property name="text">
-                     <string>Add Selection</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="3" column="0">
                    <widget class="QLabel" name="filter_type_label">
                     <property name="text">
                      <string>Filter type</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="QLabel" name="selection_list_label">
+                    <property name="text">
+                     <string>Selection List:</string>
                     </property>
                    </widget>
                   </item>
@@ -476,35 +432,59 @@
                     </property>
                    </spacer>
                   </item>
-                  <item row="5" column="0" colspan="3">
-                   <widget class="QTextBrowser" name="finding_list"/>
-                  </item>
                   <item row="0" column="0" colspan="3">
                    <widget class="QLabel" name="label_2">
                     <property name="styleSheet">
                      <string notr="true">font-size:16px;</string>
                     </property>
                     <property name="text">
-                     <string>Find</string>
+                     <string>Selection</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="0" colspan="2">
+                   <widget class="QListWidget" name="listWidget">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="10" column="0" colspan="2">
+                   <widget class="QPushButton" name="add_selection_button">
+                    <property name="text">
+                     <string>Add Selection</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0" colspan="3">
+                   <widget class="QTextBrowser" name="finding_browser">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>196</height>
+                     </size>
                     </property>
                    </widget>
                   </item>
                   <item row="4" column="0" colspan="3">
-                   <widget class="QPushButton" name="find_button">
-                    <property name="text">
-                     <string>Find</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="0">
-                   <widget class="QLabel" name="label_5">
-                    <property name="styleSheet">
-                     <string notr="true">font-size:16px;</string>
-                    </property>
+                   <widget class="QPushButton" name="select_button">
                     <property name="text">
                      <string>Select</string>
                     </property>
                    </widget>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="QLabel" name="label_7">
+                    <property name="text">
+                     <string>Selection name:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="1">
+                   <widget class="QLineEdit" name="selection_name_edit"/>
                   </item>
                   <item row="3" column="1" colspan="2">
                    <widget class="QComboBox" name="filter_type_combo_box">
@@ -523,13 +503,10 @@
                     </item>
                    </widget>
                   </item>
-                  <item row="9" column="1">
-                   <widget class="QLineEdit" name="selection_edit_2"/>
-                  </item>
-                  <item row="9" column="0">
-                   <widget class="QLabel" name="label_7">
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="filter_label">
                     <property name="text">
-                     <string>Selection name:</string>
+                     <string>Filter</string>
                     </property>
                    </widget>
                   </item>
@@ -543,10 +520,13 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="filter_label">
+                  <item row="9" column="1">
+                   <widget class="QLineEdit" name="selection_color_edit"/>
+                  </item>
+                  <item row="9" column="0">
+                   <widget class="QLabel" name="selection_color_label">
                     <property name="text">
-                     <string>Filter</string>
+                     <string>Selection color:</string>
                     </property>
                    </widget>
                   </item>
@@ -572,27 +552,21 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuSave_as">
-     <property name="title">
-      <string>Save as</string>
-     </property>
-     <addaction name="action_TXT"/>
-     <addaction name="actionCSV"/>
-    </widget>
     <addaction name="separator"/>
     <addaction name="action_create"/>
-    <addaction name="action_open"/>
-    <addaction name="action_open_resent"/>
+    <addaction name="separator"/>
+    <addaction name="action_import"/>
+    <addaction name="action_open_table"/>
     <addaction name="separator"/>
     <addaction name="action_save"/>
-    <addaction name="menuSave_as"/>
+    <addaction name="action_export"/>
    </widget>
    <widget class="QMenu" name="menu_edit">
     <property name="title">
@@ -608,11 +582,6 @@
     <addaction name="action_order_rows"/>
     <addaction name="action_order_columns"/>
    </widget>
-   <widget class="QMenu" name="menu_analysis">
-    <property name="title">
-     <string>Analysis</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuHistory">
     <property name="title">
      <string>History</string>
@@ -621,12 +590,10 @@
     <addaction name="action_redo"/>
     <addaction name="separator"/>
     <addaction name="action_last"/>
-    <addaction name="actionSelect"/>
     <addaction name="actionClear_all"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_edit"/>
-   <addaction name="menu_analysis"/>
    <addaction name="menuHistory"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -635,9 +602,9 @@
     <string>Create</string>
    </property>
   </action>
-  <action name="action_open">
+  <action name="action_import">
    <property name="text">
-    <string>Open</string>
+    <string>Import</string>
    </property>
   </action>
   <action name="action_save">
@@ -720,9 +687,19 @@
     <string>Clear</string>
    </property>
   </action>
-  <action name="action_open_resent">
+  <action name="action_open_table">
    <property name="text">
-    <string>Open resent</string>
+    <string>Open table</string>
+   </property>
+  </action>
+  <action name="action_export">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+  <action name="actionAdd_finding">
+   <property name="text">
+    <string>Add Selection</string>
    </property>
   </action>
  </widget>

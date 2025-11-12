@@ -1,12 +1,12 @@
-import csv
-from fileinput import filename
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QKeyEvent
 
 from src.app.appdata import AppData
 from src.app.history import History, Action
-from src.tools.tablewizard.Table import Table, TableOrderError
+from src.tools.tablewizard.Table import Table, TableOrderError, FilterType, InvalidFunctionFormat
 from resources import Resources
 from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem, QWidget, \
-    QInputDialog, QListWidget
+    QInputDialog, QAbstractItemView
 from PyQt6 import uic, QtCore
 
 
@@ -29,12 +29,14 @@ class CreateWindow(QWidget):
         self.cancel_button.clicked.connect(self.close)
         self.create_button.clicked.connect(self.create)
         self.location_change_button.clicked.connect(self.change_location)
+
     def change_location(self):
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.FileMode.Directory)
         file_dialog.setAcceptMode(QFileDialog.AcceptMode.AcceptOpen)
         filename = file_dialog.getExistingDirectory()
         self.location_edit.setText(filename)
+
     def create(self):
         name = self.name_edit.text()
         if not name:
@@ -48,19 +50,22 @@ class CreateWindow(QWidget):
         columns = int(self.columns_edit.text())
         headers = self.headers_edit.text().strip().split(', ')
         if len(headers) > columns:
-            QMessageBox.critical("Error","Too many headers")
+            QMessageBox.critical("Error", "Too many headers")
             return
-        else:
-            headers = headers + [[''] * (len(headers) - columns)]
+        elif len(headers) < columns:
+            headers = headers + [['-'] * (len(headers) - columns)]
         try:
             print(headers)
-            filename= f'{location}/{name}.csv'
-            table = Table([([''] * rows) * columns], headers=headers)
+            filename = f'{location}/{name}.csv'
+            table = Table([(['-'] * rows) * columns], headers=headers)
             table.save(filename)
             self.main_window.load_table(filename)
+            self.close()
         except Exception as e:
+            raise e
             QMessageBox.critical(self, "Error", 'Invalid location!')
             self.application.logger.error("Failed to create table: " + str(e), sender="CREATE_WINDOW")
+
 
 class OpenWindow(QWidget):
     def __init__(self, main_window):
@@ -86,22 +91,24 @@ class OpenWindow(QWidget):
         self.tables_list.itemClicked.connect(self.select_table)
         self.open_button.clicked.connect(self.open_table)
         self.create_button.clicked.connect(self.create_table)
+
     def open_table(self):
-        self.main_window.open_table()
+        self.main_window.import_table()
         self.close()
+
     def select_table(self):
         if self.tables_list.selectedItems():
             name = self.tables_list.selectedItems()[0].text()
             path = self.tables[name]
             try:
                 self.main_window.load_table(path)
+                self.close()
             except Exception as e:
                 QMessageBox.critical(self, "Error", 'File not found!')
 
     def create_table(self):
         self.main_window.create_table()
         self.close()
-
 
 
 class OrderWindow(QWidget):
@@ -174,14 +181,19 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.application = application
         self.load_ui()
+        self.filename = ''
+        self.history = History()
         resent_file = AppData.get_resent_file()
         if resent_file:
-            self.load_table(resent_file)
+            try:
+                self.load_table(resent_file)
+            except Exception as e:
+                self.table = Table()
+                self.open_table()
         else:
             self.table = Table()
-            self.resent_tables()
+            self.open_table()
         self.init_ui()
-        self.history = None
 
     # Загрузка интерфейса из ui файла
     def load_ui(self):
@@ -192,8 +204,8 @@ class MainWindow(QMainWindow):
 
     def init_ui(self):
         # Инициализация меню
-        self.action_open.triggered.connect(self.open_table)
-        self.action_open_resent.triggered.connect(self.resent_tables)
+        self.action_import.triggered.connect(self.import_table)
+        self.action_open_table.triggered.connect(self.open_table)
         self.action_create.triggered.connect(self.create_table)
         self.action_save.triggered.connect(self.save_table)
         self.action_add_row.triggered.connect(self.add_row)
@@ -209,8 +221,9 @@ class MainWindow(QMainWindow):
         self.action_last.triggered.connect(self.last)
 
         # Иницализация редактора
+        self.table_widget.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table_widget.itemSelectionChanged.connect(self.display_selected_items)
-        self.value_edit.textEdited.connect(self.edit_selected_items)
+        self.value_edit.editingFinished.connect(self.edit_selected_items)
         self.add_column_button.clicked.connect(self.add_column)
         self.add_row_button.clicked.connect(self.add_row)
         self.insert_row_button.clicked.connect(self.insert_row)
@@ -220,67 +233,98 @@ class MainWindow(QMainWindow):
         self.order_rows_button.clicked.connect(self.order_rows)
         self.order_columns_button.clicked.connect(self.order_columns)
         # Инициализация анализа
-        self.find_button.clicked.connect(self.find)
+        self.select_button.clicked.connect(self.select)
 
     """ >>> Функции меню <<<"""
-    def resent_tables(self):
+
+    def open_table(self):
         self.open_window = OpenWindow(self)
         self.open_window.show()
+
     def create_table(self):
         try:
             self.create_window = CreateWindow(self)
             self.create_window.show()
         except Exception as e:
             print(e)
+
     def load_table(self, filename):
         try:
-            self.filename = filename
-            AppData.set_resent_file(filename)
-            self.table = Table.load(filename)
-            self.update_table()
-            self.path_label.setText(f"Path: {filename}")
-            self.history = History()
+            def load():
+                self.filename = filename
+                AppData.set_resent_file(filename)
+                self.table = Table.load(filename)
+                self.update_table()
+                self.path_label.setText(f"Path: {filename}")
+                self.history = History()
+                self.apply_action("Load")
+
+            if self.filename != '':
+                id = QMessageBox.question(self, "Load new table", "Are you sure to load other table?")
+                if id == 16384:
+                    self.save_table()
+                    load()
+            else:
+                load()
         except Exception as e:
             self.application.logger.error("Failed to load table: " + str(e), sender="MAIN_WINDOW")
-            QMessageBox.critical(self, "Error", "Invalid file path or file content!")
+            raise e
 
-    def open_table(self):
-        try:
-            file_dialog = QFileDialog()
-            file_dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
-            file_dialog.setAcceptMode(QFileDialog.AcceptMode.AcceptOpen)
-            filename = file_dialog.getOpenFileName()[0]
-            self.load_table(filename)
-        except Exception as e:
-            self.application.logger.error("Failed to open table: " + str(e), sender="MAIN_WINDOW")
+    def import_table(self):
+        file_dialog = QFileDialog()
+        file_dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
+        file_dialog.setAcceptMode(QFileDialog.AcceptMode.AcceptOpen)
+        filename = file_dialog.getOpenFileName()[0]
+        if filename:
+            try:
+                self.load_table(filename)
+            except Exception as e:
+                self.application.logger.error("Failed to import table: " + str(e), sender="MAIN_WINDOW")
 
     def save_table(self):
         if self.filename:
             try:
                 self.table.save(self.filename)
+                name = self.filename.split("/")[-1].split(".")[0]
+                tables = AppData.get_all_tables()
+                if name not in tables:
+                    AppData.add_table(name, self.filename)
+                else:
+                    AppData.update_table(name, self.filename)
             except Exception as e:
                 self.application.logger.error("Failed to save table: " + str(e), sender="MAIN_WINDOW")
-                QMessageBox.critical(self, "Error", f"Failed to save table. Error:\n {e.__class__.__name__}")
+                QMessageBox.critical(self, "Error", f"Failed to save table!")
         else:
-            self.save_table_as()
+            self.export_table()
 
-    def save_table_as(self):
-        try:
-            file_dialog = QFileDialog()
-            filename = file_dialog.getSaveFileName()[0]
-            self.table.save(filename)
-        except Exception as e:
-            self.application.logger.error("Failed to save table: " + str(e), sender="MAIN_WINDOW")
-            QMessageBox.critical(self, "Error", f"Failed to save table. Error:\n {e.__class__.__name__}")
+    def export_table(self):
+        file_dialog = QFileDialog()
+        filename = file_dialog.getSaveFileName()[0]
+        if filename:
+            try:
+                self.table.save(filename)
+            except Exception as e:
+                self.application.logger.error("Failed to save table: " + str(e), sender="MAIN_WINDOW")
+                QMessageBox.critical(self, "Error", f"Failed to save table: Invalid filepath!")
+
     def last(self):
         self.table = self.history.last()
         self.update_table()
+
     def undo(self):
-        self.table = self.history.undo()
-        self.update_table()
+        self.history.undo()
+        action = self.history.get_current_action()
+        if action != None:
+            self.table = Table.from_str(action.get_content())
+            self.update_table()
+
     def redo(self):
-        self.table = self.history.redo()
-        self.update_table()
+        self.history.redo()
+        action = self.history.get_current_action()
+        if action != None:
+            self.table = Table.from_str(action.get_content())
+            self.update_table()
+
     """ >>> Функции редактора <<<"""
 
     # Отобразить выбранные элементы
@@ -289,36 +333,39 @@ class MainWindow(QMainWindow):
         rows = list(set(map(lambda x: x.row(), indexes)))
         columns = list(set(map(lambda x: x.column(), indexes)))
         self.selected_items = zip(rows, columns)
-
-        if len(columns) == 1:
-            columns_selection = str(columns[0] + 1)
-        elif columns == list(range(columns[0], columns[-1] + 1)):
-            columns_selection = f"{columns[0] + 1} - {columns[-1] + 1}"
-        elif len(columns) < 5:
-            columns_selection = ", ".join(map(lambda x: str(x + 1), columns))
-        else:
-            columns_selection = f"{columns[0] + 1}, ... {columns[-1] + 1}"
-        if len(rows) == 1:
-            rows_selection = str(rows[0] + 1)
-        elif rows == list(range(rows[0], rows[-1] + 1)):
-            rows_selection = f"{rows[0] + 1} - {rows[-1] + 1}"
-        elif len(rows) < 5:
-            rows_selection = ", ".join(map(lambda x: str(x + 1), rows))
-        else:
-            rows_selection = f"{rows[0] + 1}, ... {rows[-1] + 1}"
-        self.columns_selected_label.setText(f"Columns selected: {columns_selection}")
-        self.rows_selected_label.setText(f"Rows selected: {rows_selection}")
-        self.selected_items_edit.setText(f"{columns_selection}; {rows_selection}")
-        if len(indexes) == 1:
-            self.value_edit.setText(indexes[0].data())
-        else:
-            self.value_edit.setText("...")
+        try:
+            if len(columns) == 1:
+                columns_selection = str(columns[0] + 1)
+            elif columns == list(range(columns[0], columns[-1] + 1)):
+                columns_selection = f"{columns[0] + 1} - {columns[-1] + 1}"
+            elif len(columns) < 5:
+                columns_selection = ", ".join(map(lambda x: str(x + 1), columns))
+            else:
+                columns_selection = f"{columns[0] + 1}, ... {columns[-1] + 1}"
+            if len(rows) == 1:
+                rows_selection = str(rows[0] + 1)
+            elif rows == list(range(rows[0], rows[-1] + 1)):
+                rows_selection = f"{rows[0] + 1} - {rows[-1] + 1}"
+            elif len(rows) < 5:
+                rows_selection = ", ".join(map(lambda x: str(x + 1), rows))
+            else:
+                rows_selection = f"{rows[0] + 1}, ... {rows[-1] + 1}"
+            self.columns_selected_label.setText(f"Columns selected: {columns_selection}")
+            self.rows_selected_label.setText(f"Rows selected: {rows_selection}")
+            self.selected_items_edit.setText(f"{columns_selection}; {rows_selection}")
+            if len(indexes) == 1:
+                self.value_edit.setText(indexes[0].data())
+            else:
+                self.value_edit.setText("...")
+        except Exception as e:
+            self.application.logger.error("Failed to display selected items: " + str(e), sender="MAIN_WINDOW")
 
     def edit_selected_items(self):
         value = self.value_edit.text()
         for i in self.table_widget.selectedIndexes():
-            item = QTableWidgetItem(value)
-            self.table_widget.setItem(i.row(), i.column(), item)
+            self.table.set_item(i.row(), i.column(), value)
+        self.update_table()
+        self.apply_action('Edit')
 
     def add_column(self):
         header, ok_pressed = QInputDialog.getText(self, "Add column", "Header:")
@@ -393,7 +440,7 @@ class MainWindow(QMainWindow):
         if ok_pressed:
             try:
                 if int(index) > 0:
-                    self.table.delete_column(int(index) - 1)
+                    self.table.delete_row(int(index) - 1)
                     self.apply_action('Delete row')
                     self.update_table()
                 else:
@@ -456,15 +503,32 @@ class MainWindow(QMainWindow):
         order_window.order_button.clicked.connect(clicked)
 
     def apply_action(self, name):
-        self.history.apply_action(Action(name, str(self.table)))
+        try:
+            self.history.add_action(Action(name, str(self.table)))
+        except Exception as e:
+            self.application.logger.error("Failed to add action:" + str(e), sender="MAIN_WINDOW")
+
     """Функции анализа"""
-    def find(self):
-        filter = self.search_edit.text()
-        filter_type = self.search_type_combo_box.currentText()
+
+    def select(self):
+        filter = self.filter_edit.text()
+        filter_type = self.filter_type_combo_box.currentText()
         if filter_type == "Value":
-            finding = list(filter(self.table.data))
-            for f in finding:
-                self.finding_list.addItem()
+            finding = self.table.find(filter)
+        else:
+            try:
+                finding = self.table.find(filter, FilterType.Function)
+            except InvalidFunctionFormat:
+                QMessageBox.critical(self, 'Error', "Invalid filter function!")
+                return
+        result = ''
+        for item in finding:
+            value = item[0]
+            pos = item[1]
+            header = self.table.get_header(pos[1])
+            text = f'<p><b>{header}:</b>{value} {(pos[0] + 1, pos[1] + 1)}</p>'
+            result = result + text
+        self.finding_browser.setHtml(result)
 
     def update_table(self):
         self.table_widget.setRowCount(self.table.size()[0])
@@ -474,3 +538,48 @@ class MainWindow(QMainWindow):
             for j, t in enumerate(row):
                 item = QTableWidgetItem(t)
                 self.table_widget.setItem(i, j, item)
+
+    def closeEvent(self, event):
+        if self.filename == '':
+            id = QMessageBox.question(self, 'Exit without saving', 'Are you sure to exit without saving?')
+            if id != 16384:
+                self.show()
+        else:
+            self.save_table()
+
+    def keyPressEvent(self, event: QKeyEvent):
+        key = event.key()
+        modifiers = event.modifiers()
+        if modifiers == (Qt.KeyboardModifier.AltModifier | Qt.KeyboardModifier.ControlModifier):
+            if key == Qt.Key.Key_A:
+                self.add_column()
+            if key == Qt.Key.Key_I:
+                self.insert_column()
+            elif key == Qt.Key.Key_O:
+                self.order_columns()
+            elif key == Qt.Key.Key_D:
+                self.delete_column()
+        elif modifiers == (Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.ShiftModifier):
+            if key == Qt.Key.Key_I:
+                self.import_table()
+            elif key == Qt.Key.Key_O:
+                self.open_table()
+            elif key == Qt.Key.Key_C:
+                self.create()
+        elif modifiers == (Qt.KeyboardModifier.ControlModifier):
+            if key == Qt.Key.Key_Z:
+                self.undo()
+            elif key == Qt.Key.Key_Y:
+                self.redo()
+            elif key == Qt.Key.Key_I:
+                self.insert_row()
+            elif key == Qt.Key.Key_O:
+                self.order_rows()
+            elif key == Qt.Key.Key_D:
+                self.delete_row()
+            elif key == Qt.Key.Key_S:
+                self.save_table()
+            elif key == Qt.Key.Key_E:
+                self.export_table()
+            elif key == Qt.Key.Key_L:
+                self.last()
