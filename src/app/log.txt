@@ -9,3 +9,13 @@
 (2025-11-12 19:21:02.503095) FROM MAIN_WINDOW ERROR: Failed to display selected items: list index out of range 
 (2025-11-14 16:12:49.536905) FROM MAIN_WINDOW ERROR: Failed to save table: sequence item 2: expected str instance, list found 
 (2025-11-14 16:13:44.617126) FROM MAIN_WINDOW ERROR: Failed to save table: sequence item 1: expected str instance, list found 
+(2025-11-14 18:32:01.486335) FROM MAIN_WINDOW ERROR: Failed to load table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:32:06.143580) FROM MAIN_WINDOW ERROR: Failed to save table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:32:10.212837) FROM MAIN_WINDOW ERROR: Failed to load table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:32:12.806882) FROM MAIN_WINDOW ERROR: Failed to save table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:32:18.960151) FROM MAIN_WINDOW ERROR: Failed to load table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:32:36.402243) FROM MAIN_WINDOW ERROR: Failed to save table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:35:32.034400) FROM MAIN_WINDOW ERROR: Failed to load table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:35:52.589365) FROM MAIN_WINDOW ERROR: Failed to save table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:35:53.637409) FROM MAIN_WINDOW ERROR: Failed to load table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 
+(2025-11-14 18:35:59.103236) FROM MAIN_WINDOW ERROR: Failed to save table: [Errno 2] No such file or directory: 'F:/Folders/PyCharmProjects/Table-Wizard/test/vps.csv' 

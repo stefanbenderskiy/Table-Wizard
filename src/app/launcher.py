@@ -1,5 +1,5 @@
 import sys
-from application import Application
+from src.app.application import Application
 
 
 def excepthook(ext_type, value, traceback):

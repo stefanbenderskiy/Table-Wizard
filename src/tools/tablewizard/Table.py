@@ -20,8 +20,10 @@ class InvalidFunctionFormat(Exception):
 class FilterType(Enum):
     Value = 0
     Function = 1
+
+
 class Filter:
-    def __init__(self, value, type = FilterType.Value):
+    def __init__(self, value, type=FilterType.Value):
         self.value = value
         if type in [FilterType.Value, FilterType.Function]:
             self.type = type
@@ -42,11 +44,13 @@ class Filter:
                     x = table.get_item(row, column)
                     try:
                         flag = eval(self.value)
+                        if flag:
+                            filtred_data.append((x, (row, column)))
                     except Exception:
-                        raise InvalidFunctionFormat("Invalid filter function format!")
-                    if flag:
-                        filtred_data.append((x, (row, column)))
+                        pass
+
         return filtred_data
+
 
 class Table:
     def __init__(self, data=None, headers=None):
@@ -189,6 +193,7 @@ class Table:
 
     def find(self, filter):
         return filter.filter(self)
+
     # Получить размер таблицы
     def size(self):
         return (len(self.data), len(self.headers))

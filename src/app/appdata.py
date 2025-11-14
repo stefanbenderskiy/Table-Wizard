@@ -1,4 +1,4 @@
-from src.tools.database.database import DataBase
+from src.app.database import DataBase
 
 
 class AppData:

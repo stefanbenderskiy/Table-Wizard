@@ -5,16 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="edf9d9d4-bfe0-42e0-9a49-7837eaa9bd0e" name="Changes" comment="alpha-0-1-0">
+      <change afterPath="$PROJECT_DIR$/res/img/save_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/img/add_icon.ai" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/img/app_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/img/app_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/ui/main-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/main-window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/ui/open-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/open-window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/appdata.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/appdata.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/application.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/data/appdata.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/appdata.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/interface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/launcher.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/launcher.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tools/database/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/database/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tools/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tools/database/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tools/tablewizard/Table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/tablewizard/Table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/vps.csv" beforeDir="false" afterPath="$PROJECT_DIR$/test/vps.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,8 +54,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/stefanbenderskiy/Table-Wizard.git&quot;,
-    &quot;accountId&quot;: &quot;12318c11-e744-4cad-b986-18f66de53cd5&quot;
+    &quot;url&quot;: &quot;https://github.com/stefanbenderskiy/Table-Wizard&quot;,
+    &quot;accountId&quot;: &quot;a278c9fa-2f80-49c3-9018-6227353b9bf3&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -72,7 +78,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/Folders/PyCharmProjects/Table-Wizard/test&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yandex2/PycharmProjects/Table-Wizard/res/img&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -83,14 +89,15 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\res\img" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\test" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\src\app" />
+      <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\res\img" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard" />
       <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\src\app\data" />
-      <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\src\app" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\res\ui" />
-      <recent name="F:\Folders\PyCharmProjects\Table-Wizard\config" />
     </key>
   </component>
   <component name="RunManager">
@@ -126,8 +133,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PY-242.21829.153" />
-        <option value="bundled-python-sdk-464836ebc622-b74155a9e76b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.21829.153" />
+        <option value="bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159" />
       </set>
     </attachedChunks>
   </component>

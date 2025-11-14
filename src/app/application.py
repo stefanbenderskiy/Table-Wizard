@@ -1,7 +1,6 @@
 import sys
 
-from src.app.appdata import AppData
-from src.app.interface import MainWindow, OpenWindow
+from src.app.interface import MainWindow
 from PyQt6.QtWidgets import QApplication
 from src.app.logger import Logger
 

@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Open table</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../img/open_icon.png</normaloff>../img/open_icon.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>16</number>
@@ -59,7 +63,11 @@
    <item row="3" column="0">
     <widget class="QPushButton" name="open_button">
      <property name="text">
-      <string>Open</string>
+      <string>Import</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../img/import_icon.png</normaloff>../img/import_icon.png</iconset>
      </property>
     </widget>
    </item>
@@ -70,6 +78,10 @@
      </property>
      <property name="text">
       <string>Create</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../img/create_icon.png</normaloff>../img/create_icon.png</iconset>
      </property>
     </widget>
    </item>
