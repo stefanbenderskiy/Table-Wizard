@@ -1,9 +1,9 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QKeyEvent
+from PyQt6.QtGui import QKeyEvent, QColor
 
 from src.app.appdata import AppData
 from src.app.history import History, Action
-from src.tools.tablewizard.Table import Table, TableOrderError, FilterType, InvalidFunctionFormat
+from src.tools.tablewizard.Table import Table, TableOrderError, FilterType, InvalidFunctionFormat, Filter
 from resources import Resources
 from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem, QWidget, \
     QInputDialog, QAbstractItemView
@@ -223,6 +223,7 @@ class MainWindow(QMainWindow):
         # Иницализация редактора
         self.table_widget.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table_widget.itemSelectionChanged.connect(self.display_selected_items)
+        self.edit_headers_button.clicked.connect(self.edit_headers)
         self.value_edit.editingFinished.connect(self.edit_selected_items)
         self.add_column_button.clicked.connect(self.add_column)
         self.add_row_button.clicked.connect(self.add_row)
@@ -234,6 +235,7 @@ class MainWindow(QMainWindow):
         self.order_columns_button.clicked.connect(self.order_columns)
         # Инициализация анализа
         self.select_button.clicked.connect(self.select)
+        self.clear_selections_button.clicked.connect(self.clear_selections)
 
     """ >>> Функции меню <<<"""
 
@@ -308,7 +310,7 @@ class MainWindow(QMainWindow):
                 QMessageBox.critical(self, "Error", f"Failed to save table: Invalid filepath!")
 
     def last(self):
-        self.table = self.history.last()
+        self.table = self.history.last().get_content()
         self.update_table()
 
     def undo(self):
@@ -365,7 +367,22 @@ class MainWindow(QMainWindow):
         for i in self.table_widget.selectedIndexes():
             self.table.set_item(i.row(), i.column(), value)
         self.update_table()
-        self.apply_action('Edit')
+        self.apply_action('Edit items')
+
+    def edit_headers(self):
+        dialog = QInputDialog()
+        headers, ok_pressed = dialog.getMultiLineText(self, "Edit headers", "Headers:",
+                                                      '\n'.join(self.table.get_headers()))
+        headers = headers.split('\n')
+        if ok_pressed:
+            if len(headers) > len(self.table.get_headers()):
+                QMessageBox.critical(self, "Error", "Too many headers")
+                return
+            elif len(headers) < len(self.table.get_headers()):
+                headers = headers + [['-'] * (len(headers) - len(self.table.get_headers()))]
+            self.table.set_headers(headers)
+            self.update_table()
+            self.apply_action('Edit headers')
 
     def add_column(self):
         header, ok_pressed = QInputDialog.getText(self, "Add column", "Header:")
@@ -513,11 +530,16 @@ class MainWindow(QMainWindow):
     def select(self):
         filter = self.filter_edit.text()
         filter_type = self.filter_type_combo_box.currentText()
+        selection_color = self.selection_color_edit.text()
+        color = QColor.fromString(selection_color)
+        if color.value() == QColor(0, 0, 0).value() and selection_color != "#000000":
+            QMessageBox.critical(self, "Error", f"Invalid color selection!")
+            return
         if filter_type == "Value":
-            finding = self.table.find(filter)
+            finding = self.table.find(Filter(filter))
         else:
             try:
-                finding = self.table.find(filter, FilterType.Function)
+                finding = self.table.find(Filter(filter, FilterType.Function))
             except InvalidFunctionFormat:
                 QMessageBox.critical(self, 'Error', "Invalid filter function!")
                 return
@@ -525,10 +547,21 @@ class MainWindow(QMainWindow):
         for item in finding:
             value = item[0]
             pos = item[1]
+            item = self.table_widget.item(pos[0], pos[1])
+            item.setBackground(color)
             header = self.table.get_header(pos[1])
             text = f'<p><b>{header}:</b>{value} {(pos[0] + 1, pos[1] + 1)}</p>'
             result = result + text
-        self.finding_browser.setHtml(result)
+        if result:
+            self.finding_browser.setHtml(result)
+        else:
+            self.finding_browser.setHtml('<i>Not found</i>')
+
+    def clear_selections(self):
+        for row in range(len(self.table.get_data())):
+            for column in range(len(self.table.get_row(row))):
+                item = self.table_widget.item(row, column)
+                item.setBackground(QColor.fromString('#ffffff'))
 
     def update_table(self):
         self.table_widget.setRowCount(self.table.size()[0])
@@ -566,6 +599,8 @@ class MainWindow(QMainWindow):
                 self.open_table()
             elif key == Qt.Key.Key_C:
                 self.create()
+            elif key == Qt.Key.Key_R:
+                AppData.clear()
         elif modifiers == (Qt.KeyboardModifier.ControlModifier):
             if key == Qt.Key.Key_Z:
                 self.undo()

@@ -7,3 +7,5 @@
 (2025-11-12 18:16:41.080303) FROM MAIN_WINDOW ERROR: Failed to display selected items: list index out of range 
 (2025-11-12 18:16:42.224427) FROM MAIN_WINDOW ERROR: Failed to display selected items: list index out of range 
 (2025-11-12 19:21:02.503095) FROM MAIN_WINDOW ERROR: Failed to display selected items: list index out of range 
+(2025-11-14 16:12:49.536905) FROM MAIN_WINDOW ERROR: Failed to save table: sequence item 2: expected str instance, list found 
+(2025-11-14 16:13:44.617126) FROM MAIN_WINDOW ERROR: Failed to save table: sequence item 1: expected str instance, list found 

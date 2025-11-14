@@ -58,7 +58,7 @@ class AppData:
 
     @staticmethod
     def get_all_tables():
-        data = AppData.database.get_request("""SELECT Name FROM Tables""", ())
+        data = AppData.database.get_request("""SELECT Name FROM Tables""")
         if data:
             return list(map(lambda x: x[0], data))
         else:
@@ -67,7 +67,7 @@ class AppData:
     @staticmethod
     def clear_all_tables():
         try:
-            AppData.database.set_request("""DELETE FROM Tables""", (n, table_name, path))
+            AppData.database.set_request("""DELETE FROM Tables""")
         except Exception:
             pass
 

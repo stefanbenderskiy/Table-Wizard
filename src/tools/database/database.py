@@ -12,13 +12,13 @@ class DataBase:
     def commit(self):
         self.connection.commit()
 
-    def get_request(self, sql, params=None):
+    def get_request(self, sql, params=()):
         try:
             return self.query(sql, params).fetchall()
         except Exception as e:
             print(e)
 
-    def set_request(self, sql, params=None):
+    def set_request(self, sql, params=()):
         try:
             self.query(sql, params)
             self.commit()

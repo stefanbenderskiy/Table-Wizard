@@ -4,18 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="edf9d9d4-bfe0-42e0-9a49-7837eaa9bd0e" name="Changes" comment="alpha-0-0-7">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="edf9d9d4-bfe0-42e0-9a49-7837eaa9bd0e" name="Changes" comment="alpha-0-1-0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/ui/main-window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/res/ui/main-window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/appdata.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/appdata.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/data/appdata.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/appdata.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/history.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/history.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/interface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/launcher.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/launcher.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tools/database/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/database/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tools/tablewizard/Table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/tablewizard/Table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/test/vps.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/vps.csv" beforeDir="false" afterPath="$PROJECT_DIR$/test/vps.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,11 +86,11 @@
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\test" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Folders\PyCharmProjects\Table-Wizard" />
       <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\src\app\data" />
       <recent name="C:\Users\yandex2\PycharmProjects\Table-Wizard\src\app" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\res\ui" />
       <recent name="F:\Folders\PyCharmProjects\Table-Wizard\config" />
-      <recent name="F:\Folders\PyCharmProjects\Table-Wizard\test" />
     </key>
   </component>
   <component name="RunManager">
@@ -162,7 +161,9 @@
       <workItem from="1762798983906" duration="2871000" />
       <workItem from="1762947524458" duration="122000" />
       <workItem from="1762956059115" duration="10381000" />
-      <workItem from="1762969863390" duration="740000" />
+      <workItem from="1762969863390" duration="852000" />
+      <workItem from="1763119273905" duration="7558000" />
+      <workItem from="1763129491970" duration="902000" />
     </task>
     <task id="LOCAL-00001" summary="alpha-0-0-1">
       <option name="closed" value="true" />
@@ -188,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762450879301</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="alpha-0-1-0">
+      <option name="closed" value="true" />
+      <created>1762970706383</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762970706383</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,7 +256,8 @@
     <MESSAGE value="alpha-0-0-1" />
     <MESSAGE value="alpha-0-0-4" />
     <MESSAGE value="alpha-0-0-6" />
-    <option name="LAST_COMMIT_MESSAGE" value="alpha-0-0-6" />
+    <MESSAGE value="alpha-0-1-0" />
+    <option name="LAST_COMMIT_MESSAGE" value="alpha-0-1-0" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Table_Wizard$windows.coverage" NAME="windows Coverage Results" MODIFIED="1762356256088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/app" />
@@ -255,7 +265,7 @@
     <SUITE FILE_PATH="coverage/Table_Wizard$main_window.coverage" NAME="main_window Coverage Results" MODIFIED="1762188530986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/app" />
     <SUITE FILE_PATH="coverage/Table_Wizard$app.coverage" NAME="app Coverage Results" MODIFIED="1761724983212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/Table_Wizard$main.coverage" NAME="main Coverage Results" MODIFIED="1761727129367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/Table_Wizard$launcher.coverage" NAME="launcher Coverage Results" MODIFIED="1762970405144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/app" />
+    <SUITE FILE_PATH="coverage/Table_Wizard$launcher.coverage" NAME="launcher Coverage Results" MODIFIED="1763126994091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/app" />
     <SUITE FILE_PATH="coverage/Table_Wizard$interface.coverage" NAME="interface Coverage Results" MODIFIED="1762355769060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/app" />
   </component>
 </project>

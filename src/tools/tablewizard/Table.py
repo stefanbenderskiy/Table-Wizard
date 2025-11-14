@@ -20,7 +20,33 @@ class InvalidFunctionFormat(Exception):
 class FilterType(Enum):
     Value = 0
     Function = 1
+class Filter:
+    def __init__(self, value, type = FilterType.Value):
+        self.value = value
+        if type in [FilterType.Value, FilterType.Function]:
+            self.type = type
+        else:
+            raise InvalidFilterType(f"Invalid filter type: {type}!")
 
+    def filter(self, table):
+        filtred_data = []
+        if self.type == FilterType.Value:
+            for row in range(len(table.get_data())):
+                for column in range(len(table.get_row(row))):
+                    item = table.get_item(row, column)
+                    if self.value in item:
+                        filtred_data.append((item, (row, column)))
+        elif self.type == FilterType.Function:
+            for row in range(len(table.get_data())):
+                for column in range(len(table.get_row(row))):
+                    x = table.get_item(row, column)
+                    try:
+                        flag = eval(self.value)
+                    except Exception:
+                        raise InvalidFunctionFormat("Invalid filter function format!")
+                    if flag:
+                        filtred_data.append((x, (row, column)))
+        return filtred_data
 
 class Table:
     def __init__(self, data=None, headers=None):
@@ -161,29 +187,8 @@ class Table:
     def set_item(self, row, column, value):
         self.data[row][column] = str(value)
 
-    def find(self, filter, filter_type=FilterType.Value):
-        finding = []
-        if filter_type == FilterType.Value:
-            for row in range(len(self.data)):
-                for column in range(len(self.data[row])):
-                    item = self.get_item(row, column)
-                    if filter in item:
-                        finding.append((item, (row, column)))
-        elif filter_type == FilterType.Function:
-            for row in range(len(self.data)):
-                for column in range(len(self.data[row])):
-                    x = self.get_item(row, column)
-                    flag = False
-                    try:
-                        flag = eval(filter)
-                    except Exception:
-                        raise InvalidFunctionFormat("Invalid filter function format!")
-                    if flag:
-                        finding.append((x, (row, column)))
-        else:
-            raise InvalidFilterType(f"Invalid filter type: {filter_type}!")
-        return finding
-
+    def find(self, filter):
+        return filter.filter(self)
     # Получить размер таблицы
     def size(self):
         return (len(self.data), len(self.headers))
